@@ -80,7 +80,7 @@ fun SearchAppBar(
             .fillMaxWidth()
             .height(TOP_APP_BAR_HEIGHT),
         elevation = AppBarDefaults.TopAppBarElevation,
-        color = MaterialTheme.colors.topAppBackgroundColor
+        color = MaterialTheme.colors.topAppBarBackgroundColor
     ) {
         TextField(modifier = Modifier.fillMaxWidth(), value = text,
             onValueChange = {
@@ -95,7 +95,7 @@ fun SearchAppBar(
                 )
             },
             textStyle = TextStyle(
-                color = MaterialTheme.colors.topAppBackgroundColor,
+                color = MaterialTheme.colors.topAppBarBackgroundColor,
                 fontSize = MaterialTheme.typography.subtitle1.fontSize
             ),
             singleLine = true,
@@ -164,7 +164,7 @@ fun DefaultListAppBar(
             onDeleteAllConfirmed = onDeleteAllConfirmed
         )
     },
-        backgroundColor = MaterialTheme.colors.topAppBackgroundColor
+        backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor
     )
 }
 

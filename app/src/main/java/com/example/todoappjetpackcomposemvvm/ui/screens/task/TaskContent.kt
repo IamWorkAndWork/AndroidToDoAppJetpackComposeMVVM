@@ -16,6 +16,7 @@ import com.example.todoappjetpackcomposemvvm.data.models.Priority
 import com.example.todoappjetpackcomposemvvm.ui.theme.LARGE_PADDING
 import com.example.todoappjetpackcomposemvvm.ui.theme.MEDIUM_PADDING
 
+
 @Composable
 fun TaskContent(
     title: String,
@@ -25,7 +26,6 @@ fun TaskContent(
     priority: Priority,
     onPrioritySelected: (Priority) -> Unit
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,12 +35,8 @@ fun TaskContent(
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = title,
-            onValueChange = {
-                onTitleChange(it)
-            },
-            label = {
-                Text(text = stringResource(id = R.string.title))
-            },
+            onValueChange = { onTitleChange(it) },
+            label = { Text(text = stringResource(id = R.string.title)) },
             textStyle = MaterialTheme.typography.body1,
             singleLine = true
         )
@@ -55,16 +51,11 @@ fun TaskContent(
         OutlinedTextField(
             modifier = Modifier.fillMaxSize(),
             value = description,
-            onValueChange = {
-                onDescriptionChange(it)
-            },
-            label = {
-                Text(text = stringResource(id = R.string.description))
-            },
+            onValueChange = { onDescriptionChange(it) },
+            label = { Text(text = stringResource(id = R.string.description)) },
             textStyle = MaterialTheme.typography.body1
         )
     }
-
 }
 
 

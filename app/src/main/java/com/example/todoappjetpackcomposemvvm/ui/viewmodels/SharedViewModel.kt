@@ -167,7 +167,7 @@ class SharedViewModel @Inject constructor(
                 description = description.value,
                 priority = priority.value
             )
-            repository.updateTask(toDoTask = toDoTask)
+            repository.deleteTask(toDoTask = toDoTask)
         }
     }
 
@@ -177,7 +177,7 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun handleDatavaseActions(action: Action) {
+    fun handleDatabaseActions(action: Action) {
         when (action) {
             Action.ADD -> {
                 addTask()

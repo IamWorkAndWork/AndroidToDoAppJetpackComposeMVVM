@@ -11,7 +11,7 @@ import com.example.todoappjetpackcomposemvvm.R
 import com.example.todoappjetpackcomposemvvm.components.DisplayAlertDialog
 import com.example.todoappjetpackcomposemvvm.data.models.Priority
 import com.example.todoappjetpackcomposemvvm.data.models.ToDoTask
-import com.example.todoappjetpackcomposemvvm.ui.theme.topAppBackgroundColor
+import com.example.todoappjetpackcomposemvvm.ui.theme.topAppBarBackgroundColor
 import com.example.todoappjetpackcomposemvvm.ui.theme.topAppBarContentColor
 import com.example.todoappjetpackcomposemvvm.util.Action
 
@@ -31,7 +31,9 @@ fun TaskAppBar(
 }
 
 @Composable
-fun NewTaskAppBar(navigateToListScreen: (Action) -> Unit) {
+fun NewTaskAppBar(
+    navigateToListScreen: (Action) -> Unit
+) {
     TopAppBar(
         navigationIcon = {
             BackAction(onBackClicked = navigateToListScreen)
@@ -42,7 +44,7 @@ fun NewTaskAppBar(navigateToListScreen: (Action) -> Unit) {
                 color = MaterialTheme.colors.topAppBarContentColor
             )
         },
-        backgroundColor = MaterialTheme.colors.topAppBarContentColor,
+        backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
             AddAction(onAddClicked = navigateToListScreen)
         }
@@ -50,7 +52,9 @@ fun NewTaskAppBar(navigateToListScreen: (Action) -> Unit) {
 }
 
 @Composable
-fun BackAction(onBackClicked: (Action) -> Unit) {
+fun BackAction(
+    onBackClicked: (Action) -> Unit
+) {
     IconButton(onClick = { onBackClicked(Action.NO_ACTION) }) {
         Icon(
             imageVector = Icons.Filled.ArrowBack,
@@ -60,12 +64,13 @@ fun BackAction(onBackClicked: (Action) -> Unit) {
     }
 }
 
-
 @Composable
-fun AddAction(onAddClicked: (Action) -> Unit) {
+fun AddAction(
+    onAddClicked: (Action) -> Unit
+) {
     IconButton(onClick = { onAddClicked(Action.ADD) }) {
         Icon(
-            imageVector = Icons.Filled.Add,
+            imageVector = Icons.Filled.Check,
             contentDescription = stringResource(id = R.string.add_task),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
@@ -73,7 +78,10 @@ fun AddAction(onAddClicked: (Action) -> Unit) {
 }
 
 @Composable
-fun ExistingTaskAppBar(selectedTask: ToDoTask, navigateToListScreen: (Action) -> Unit) {
+fun ExistingTaskAppBar(
+    selectedTask: ToDoTask,
+    navigateToListScreen: (Action) -> Unit
+) {
     TopAppBar(
         navigationIcon = {
             CloseAction(onCloseClicked = navigateToListScreen)
@@ -86,9 +94,9 @@ fun ExistingTaskAppBar(selectedTask: ToDoTask, navigateToListScreen: (Action) ->
                 overflow = TextOverflow.Ellipsis
             )
         },
-        backgroundColor = MaterialTheme.colors.topAppBackgroundColor,
+        backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
-            ExistingTaskAppBar(
+            ExistingTaskAppBarActions(
                 selectedTask = selectedTask,
                 navigateToListScreen = navigateToListScreen
             )
@@ -97,7 +105,9 @@ fun ExistingTaskAppBar(selectedTask: ToDoTask, navigateToListScreen: (Action) ->
 }
 
 @Composable
-fun CloseAction(onCloseClicked: (Action) -> Unit) {
+fun CloseAction(
+    onCloseClicked: (Action) -> Unit
+) {
     IconButton(onClick = { onCloseClicked(Action.NO_ACTION) }) {
         Icon(
             imageVector = Icons.Filled.Close,
@@ -112,9 +122,7 @@ fun ExistingTaskAppBarActions(
     selectedTask: ToDoTask,
     navigateToListScreen: (Action) -> Unit
 ) {
-    var openDialog by remember {
-        mutableStateOf(false)
-    }
+    var openDialog by remember { mutableStateOf(false) }
 
     DisplayAlertDialog(
         title = stringResource(
@@ -127,18 +135,17 @@ fun ExistingTaskAppBarActions(
         ),
         openDialog = openDialog,
         closeDialog = { openDialog = false },
-        onYesClicked = {
-            navigateToListScreen(Action.DELETE)
-        }
+        onYesClicked = { navigateToListScreen(Action.DELETE) }
     )
 
     DeleteAction(onDeleteClicked = { openDialog = true })
     UpdateAction(onUpdateClicked = navigateToListScreen)
-
 }
 
 @Composable
-fun DeleteAction(onDeleteClicked: () -> Unit) {
+fun DeleteAction(
+    onDeleteClicked: () -> Unit
+) {
     IconButton(onClick = { onDeleteClicked() }) {
         Icon(
             imageVector = Icons.Filled.Delete,
@@ -149,7 +156,9 @@ fun DeleteAction(onDeleteClicked: () -> Unit) {
 }
 
 @Composable
-fun UpdateAction(onUpdateClicked: (Action) -> Unit) {
+fun UpdateAction(
+    onUpdateClicked: (Action) -> Unit
+) {
     IconButton(onClick = { onUpdateClicked(Action.UPDATE) }) {
         Icon(
             imageVector = Icons.Filled.Check,
@@ -159,10 +168,13 @@ fun UpdateAction(onUpdateClicked: (Action) -> Unit) {
     }
 }
 
+
 @Composable
 @Preview
 private fun NewTaskAppBarPreview() {
-    NewTaskAppBar(navigateToListScreen = {})
+    NewTaskAppBar(
+        navigateToListScreen = {}
+    )
 }
 
 @Composable
@@ -171,13 +183,12 @@ private fun ExistingTaskAppBarPreview() {
     ExistingTaskAppBar(
         selectedTask = ToDoTask(
             id = 0,
-            title = "John Rambo",
+            title = "Stevdza-San",
             description = "Some random text",
             priority = Priority.LOW
         ),
         navigateToListScreen = {}
     )
 }
-
 
 

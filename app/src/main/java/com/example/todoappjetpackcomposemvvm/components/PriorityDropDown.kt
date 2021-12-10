@@ -25,32 +25,28 @@ import com.example.todoappjetpackcomposemvvm.data.models.Priority
 import com.example.todoappjetpackcomposemvvm.ui.theme.PRIORITY_DROP_DOWN_HEIGHT
 import com.example.todoappjetpackcomposemvvm.ui.theme.PRIORITY_INDICATOR_SIZE
 
+
 @Composable
 fun PriorityDropDown(
     priority: Priority,
     onPrioritySelected: (Priority) -> Unit
 ) {
-    var expaned by remember {
-        mutableStateOf(false)
-    }
+    var expanded by remember { mutableStateOf(false) }
+    val angle: Float by animateFloatAsState(
+        targetValue = if (expanded) 180f else 0f
+    )
 
-    val angle by animateFloatAsState(targetValue = if (expaned) 180f else 0f)
-
-    var parentSize by remember {
-        mutableStateOf(IntSize.Zero)
-    }
+    var parentSize by remember { mutableStateOf(IntSize.Zero) }
 
     Row(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .onGloballyPositioned {
                 parentSize = it.size
             }
             .background(MaterialTheme.colors.background)
             .height(PRIORITY_DROP_DOWN_HEIGHT)
-            .clickable {
-                expaned = true
-            }
+            .clickable { expanded = true }
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colors.onSurface.copy(
@@ -73,32 +69,40 @@ fun PriorityDropDown(
             text = priority.name,
             style = MaterialTheme.typography.subtitle2
         )
-        IconButton(modifier = Modifier
-            .alpha(ContentAlpha.medium)
-            .rotate(degrees = angle)
-            .weight(weight = 1.5f),
-            onClick = { expaned = true }) {
+        IconButton(
+            modifier = Modifier
+                .alpha(ContentAlpha.medium)
+                .rotate(degrees = angle)
+                .weight(weight = 1.5f),
+            onClick = { expanded = true }
+        ) {
             Icon(
                 imageVector = Icons.Filled.ArrowDropDown,
-                contentDescription = stringResource(id = R.string.drop_down_arrow)
+                contentDescription = stringResource(
+                    id = R.string.drop_down_arrow
+                )
             )
         }
-        DropdownMenu(modifier = Modifier.width(with(LocalDensity.current) {
-            parentSize.width.toDp()
-        }), expanded = expaned,
-            onDismissRequest = { expaned = false }) {
+        DropdownMenu(
+            modifier = Modifier
+                .width(with(LocalDensity.current) { parentSize.width.toDp() }),
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
             Priority.values().slice(0..2).forEach { priority ->
-                DropdownMenuItem(onClick = {
-                    expaned = false
-                    onPrioritySelected(priority)
-                }) {
-                    PriorityItem(priority)
+                DropdownMenuItem(
+                    onClick = {
+                        expanded = false
+                        onPrioritySelected(priority)
+                    }
+                ) {
+                    PriorityItem(priority = priority)
                 }
             }
         }
     }
-
 }
+
 
 
 @Composable
